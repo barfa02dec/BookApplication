@@ -1,0 +1,125 @@
+package com.app.model;
+
+import java.time.LocalDate;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Component;
+
+@Component
+@Entity
+@Table(name = "order_details")
+public class OrderDetails {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer order_id;
+	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
+	@JoinColumn(name = "user_id",foreignKey = @ForeignKey(name = "user_id"))
+	private User user_id;
+	@NonNull
+	private double total_amount;
+	@NotNull
+	private LocalDate booking_date;
+
+	public OrderDetails() {
+		super();
+	}
+
+	public OrderDetails(User user_id, double total_amount, @NotNull LocalDate booking_date) {
+		super();
+		this.user_id = user_id;
+		this.total_amount = total_amount;
+		this.booking_date = booking_date;
+	}
+
+	public Integer getOrder_id() {
+		return order_id;
+	}
+
+	public void setOrder_id(Integer order_id) {
+		this.order_id = order_id;
+	}
+
+	public User getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(User user_id) {
+		this.user_id = user_id;
+	}
+
+	public double getTotal_amount() {
+		return total_amount;
+	}
+
+	public void setTotal_amount(double total_amount) {
+		this.total_amount = total_amount;
+	}
+
+	public LocalDate getBooking_date() {
+		return booking_date;
+	}
+
+	public void setBooking_date(LocalDate booking_date) {
+		this.booking_date = booking_date;
+	}
+
+	@Override
+	public String toString() {
+		return "OrderDetails [order_id=" + order_id + ", user_id=" + user_id + ", total_amount=" + total_amount
+				+ ", booking_date=" + booking_date + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((booking_date == null) ? 0 : booking_date.hashCode());
+		result = prime * result + ((order_id == null) ? 0 : order_id.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(total_amount);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((user_id == null) ? 0 : user_id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		OrderDetails other = (OrderDetails) obj;
+		if (booking_date == null) {
+			if (other.booking_date != null)
+				return false;
+		} else if (!booking_date.equals(other.booking_date))
+			return false;
+		if (order_id == null) {
+			if (other.order_id != null)
+				return false;
+		} else if (!order_id.equals(other.order_id))
+			return false;
+		if (Double.doubleToLongBits(total_amount) != Double.doubleToLongBits(other.total_amount))
+			return false;
+		if (user_id == null) {
+			if (other.user_id != null)
+				return false;
+		} else if (!user_id.equals(other.user_id))
+			return false;
+		return true;
+	}
+	
+}

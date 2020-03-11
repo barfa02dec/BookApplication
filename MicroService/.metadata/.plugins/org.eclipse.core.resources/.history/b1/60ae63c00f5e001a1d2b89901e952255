@@ -1,0 +1,43 @@
+package com.app.model;
+
+import java.time.LocalDate;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import org.springframework.stereotype.Component;
+
+import com.app.validation.ValidateBookDetails;
+
+@Component
+@Entity
+@Table(name = "booking_details")
+public class BookingDetails {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int booking_id;
+	@NotNull
+	private LocalDate delivery_date;
+	@NotNull
+	private int quantity;
+	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@JoinColumn(name = "book_inventory_id",foreignKey = @ForeignKey(name = "book_inventory_id"))
+	private BookInventory book_inventory_id;
+	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@JoinColumn(name = "order_id")
+	private OrderDetails order_id;
+	
+	public BookingDetails() {
+		super();
+	}
+	
+
+}

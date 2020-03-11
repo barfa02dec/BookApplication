@@ -1,0 +1,142 @@
+package com.app.model;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import com.app.validation.ValidateBookDetails;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
+@Table(name = "book_inventory")
+public class BookInventory {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer book_inventory_id;
+	@NotNull
+	private int stock;
+	@NotNull
+	private String language;
+	@NotNull
+	private int delivery_in_days;
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@JoinColumn( name = "book_id"/*,foreignKey = @ForeignKey( name = "book_id")*/)
+	private Book book_id;
+	
+	public BookInventory() {
+		super();
+	}
+
+	public BookInventory(@NotNull int stock, @NotNull String language, @NotNull int delivery_in_days) {
+		super();
+		ValidateBookDetails.checkNullValue(stock, "stock");
+		this.stock = stock;
+		ValidateBookDetails.checkNullValue(language, "language");
+		this.language = language;
+		ValidateBookDetails.checkNullValue(delivery_in_days, "delivery_in_days");
+		this.delivery_in_days = delivery_in_days;
+	}
+
+
+	public Integer getBook_inventory_id() {
+		return book_inventory_id;
+	}
+
+	public void setBook_inventory_id(Integer book_inventory_id) {
+		ValidateBookDetails.checkNullValue(book_inventory_id, "book_inventory_id");
+		this.book_inventory_id = book_inventory_id;
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		ValidateBookDetails.checkNullValue(stock, "stock");
+		this.stock = stock;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		ValidateBookDetails.checkNullValue(language, "language");
+		this.language = language;
+	}
+
+	public int getDelivery_in_days() {
+		return delivery_in_days;
+	}
+
+	public void setDelivery_in_days(int delivery_in_days) {
+		ValidateBookDetails.checkNullValue(delivery_in_days, "delivery_in_days");
+		this.delivery_in_days = delivery_in_days;
+	}
+
+	public Book getBook_id() {
+		return book_id;
+	}
+
+	public void setBook_id(Book book_id) {
+		ValidateBookDetails.checkNullValue(book_id, "book_id");
+		this.book_id = book_id;
+	}
+
+	@Override
+	public String toString() {
+		return "BookInventory [book_inventory_id=" + book_inventory_id + ", stock=" + stock + ", language=" + language
+				+ ", delivery_in_days=" + delivery_in_days + ", book_id=" + book_id + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((book_id == null) ? 0 : book_id.hashCode());
+		result = prime * result + ((book_inventory_id == null) ? 0 : book_inventory_id.hashCode());
+		result = prime * result + delivery_in_days;
+		result = prime * result + ((language == null) ? 0 : language.hashCode());
+		result = prime * result + stock;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BookInventory other = (BookInventory) obj;
+		if (book_id == null) {
+			if (other.book_id != null)
+				return false;
+		} else if (!book_id.equals(other.book_id))
+			return false;
+		if (book_inventory_id == null) {
+			if (other.book_inventory_id != null)
+				return false;
+		} else if (!book_inventory_id.equals(other.book_inventory_id))
+			return false;
+		if (delivery_in_days != other.delivery_in_days)
+			return false;
+		if (language == null) {
+			if (other.language != null)
+				return false;
+		} else if (!language.equals(other.language))
+			return false;
+		if (stock != other.stock)
+			return false;
+		return true;
+	}
+	
+	
+}

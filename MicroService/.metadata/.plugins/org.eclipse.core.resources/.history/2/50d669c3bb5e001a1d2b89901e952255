@@ -1,0 +1,39 @@
+package com.app.controller;
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import com.app.exception.BookException;
+import com.app.model.BookingDetails;
+import com.app.service.OrderServiceInf;
+
+/**
+ * Controller that performs CRUD operation that related to Book and user
+ * Work as navigator between model and view
+ * */
+@CrossOrigin(origins = "http://localhost:4200",allowedHeaders = "*")
+@RestController
+public class OrderController {
+	@Autowired
+	OrderServiceInf order_service;
+	/**
+	 * Input user_id as path variable and list of booking details that takes quantity and book inventory id
+	 * check stocks for each book and update book inventory table
+	 * calculate total amount and create and store object into order table
+	 * get order id and set for each booking details object and store it into booking details table
+	 * return total amount of order
+	 * @throw BookException
+	 */
+	@PostMapping("/user/order/{user_id}")
+	public @ResponseBody double placeOrder(@PathVariable("user_id")int user_id,@RequestBody List<BookingDetails> booking_details) throws BookException{
+		if(booking_details.isEmpty())
+			throw new BookException(HttpStatus.UNPROCESSABLE_ENTITY, "Can not place order with zero product");
+		return order_service.placeOrder(user_id, booking_details);
+	}
+}

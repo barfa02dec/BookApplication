@@ -1,0 +1,26 @@
+package com.app.service;
+
+import java.util.List;
+import com.app.exception.BookException;
+import com.app.exception.UserError;
+import com.app.model.BookingDetails;
+import com.app.model.OrderDetails;
+
+public interface OrderServiceInf {
+	
+	/******************* Create ******************/
+	public double placeOrder(int user_id,List<BookingDetails> booking_details) throws BookException,UserError; 
+	
+	/******************* Read ********************/
+	public OrderDetails findOrder(int order_id)throws BookException;
+	public List<BookingDetails> getAllProductOfAnOrder(int order_id) throws BookException;
+	public List<List<BookingDetails>> getAllProductOfAnUser(int user_id) throws BookException;
+
+	/******************* Update ********************/
+	//remove list of booking details from an order
+	//add list of booking details in an order
+	/******************* Remove ********************/
+	public void removeAllOrderOfAnUser(int user_id) throws BookException;
+	public void removeOrder(int order_id) throws BookException;
+	
+	}

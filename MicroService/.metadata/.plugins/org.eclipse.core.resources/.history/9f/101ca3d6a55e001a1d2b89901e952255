@@ -1,0 +1,12 @@
+package com.config;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class UserURL {
+	
+	public String getUserURL() {
+		return "http://localhost:8080/";
+	}
+	
+}

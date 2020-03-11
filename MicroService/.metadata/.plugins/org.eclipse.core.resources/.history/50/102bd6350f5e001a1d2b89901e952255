@@ -1,0 +1,80 @@
+package com.app.controller;
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import com.app.exception.BookException;
+import com.app.model.Book;
+import com.app.model.BookInventory;
+import com.app.service.BookInventoryInf;
+import com.app.service.BookServiceInf;
+
+/**
+ * Controller that performs CRUD operation that related to Book
+ * Work as navigator between model and view
+ * */
+@CrossOrigin(origins = "http://localhost:4200",allowedHeaders = "*")
+@RestController
+public class BookController {
+
+	@Autowired
+	BookServiceInf book_service;
+	@Autowired
+	BookInventoryInf book_inven_service;
+	/**
+	 * input book object check validation on each field
+	 * insert book object in book table
+	 * @return stored object
+	 * @throws BookException
+	 */
+	@PostMapping("/book")
+	public @ResponseBody Book addBook(@RequestBody Book book) throws BookException {
+		return book_service.addBook(book);
+	}
+	/**
+	 * input book id and list of book inventory
+	 * check is book id exist
+	 * store list of book inventory into book inventory table
+	 * return list of book inventory object 
+	 * @throws BookException
+	 */
+
+	@PostMapping("/book/inventory/{book_id}")
+	public @ResponseBody List<BookInventory> addBookInventory(@PathVariable("book_id")int book_id,@RequestBody List<BookInventory> book_inventory) throws BookException {
+		return book_inven_service.addBookInventory(book_inventory,book_id);
+	}
+	/**
+	 * @return All books
+	 */
+	@GetMapping("/book")
+	public Iterable<Book> getAllBooks(){
+		return book_service.getAllBooks(); 
+	}
+	
+	/**
+	 * @param Book object
+	 * replace old book object by new object
+	 * @return updated book object
+	 * @throws BookException
+	 */
+	@PutMapping("/book")
+	public @ResponseBody Book updateBook(@RequestBody Book book) throws BookException {
+		return book_service.updateBook(book);
+	}
+	/**
+	 * @param book_inventory
+	 * @return updated book inventory object
+	 * @throws BookException
+	 */
+	@PutMapping("/book/inventory")
+	public @ResponseBody BookInventory updateBookInventory(@RequestBody BookInventory book_inventory) throws BookException {
+		return book_inven_service.updateBookInventory(book_inventory);
+	}
+}

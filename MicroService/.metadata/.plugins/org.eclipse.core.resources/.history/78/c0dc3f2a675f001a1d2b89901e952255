@@ -1,0 +1,17 @@
+package com.app.exception;
+
+import java.nio.charset.Charset;
+
+import org.apache.catalina.connector.Response;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.server.ResponseStatusException;
+
+@SuppressWarnings("serial")
+public class UserError extends Exception{
+	Response r;
+	public UserError(Response r) {
+		this.r=r;
+	}
+
+}

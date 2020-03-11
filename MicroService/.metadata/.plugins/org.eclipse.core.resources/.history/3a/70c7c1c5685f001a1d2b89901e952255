@@ -1,0 +1,13 @@
+package com.app.exception;
+
+
+import org.apache.coyote.Response;
+
+@SuppressWarnings("serial")
+public class UserError extends Exception{
+	Response r = new Response();
+	public UserError(Response r) {
+		this.r=r;
+	}
+
+}

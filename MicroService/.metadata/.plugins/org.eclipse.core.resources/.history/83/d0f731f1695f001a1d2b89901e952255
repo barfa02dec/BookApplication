@@ -1,0 +1,10 @@
+package com.app.exception;
+
+import org.springframework.web.client.HttpClientErrorException;
+
+public class UserException {
+	private HttpClientErrorException e;
+	public UserException(HttpClientErrorException e) {
+		this.e=e;
+	}
+}

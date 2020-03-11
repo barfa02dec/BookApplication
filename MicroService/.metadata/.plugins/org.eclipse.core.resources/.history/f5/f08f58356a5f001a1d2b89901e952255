@@ -1,0 +1,11 @@
+package com.app.exception;
+
+import org.springframework.web.client.HttpClientErrorException;
+
+@SuppressWarnings("serial")
+public class UserException extends Exception {
+	private HttpClientErrorException error;
+	public UserException(HttpClientErrorException e) {
+		this.error=e;
+	}
+}

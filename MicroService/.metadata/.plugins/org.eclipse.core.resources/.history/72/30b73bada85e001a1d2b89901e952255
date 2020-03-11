@@ -1,0 +1,27 @@
+package com.app;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
+
+@Configuration
+public class URLConfiguration {
+
+	@Bean
+	public RestTemplate getRestTemplate() {
+		return new RestTemplate();
+	}
+	
+	@Bean
+	public String getUserURL() {
+		return getUserURL();
+	}
+	
+	@Bean
+	public String getBookURL() {
+		BookURL bookURL	= new BookURL();
+		return bookURL.getBookURL();
+	}
+}
+
+

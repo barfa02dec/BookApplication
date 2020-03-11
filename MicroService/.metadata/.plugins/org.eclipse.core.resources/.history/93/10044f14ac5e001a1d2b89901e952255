@@ -1,0 +1,10 @@
+package com.app;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class BookURL {	
+	public String getBookURL() {
+		return "http://localhost:8081/";
+	}
+}
